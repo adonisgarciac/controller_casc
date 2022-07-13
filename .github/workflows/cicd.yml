@@ -14,7 +14,12 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: building collection
-      run:  ./build_collection.sh
+      run:  |
+        VERSION_RELEASE=$(echo ${GITHUB_REF##*/} | grep -oP '(?<=Version_)[^ ]*')
+        sed -i "s/version:.*/version: ${VERSION_RELEASE}/g" galaxy.yml
+        git commit -am "new version from tag ${VERSION_RELEASE}"
+        git push
+        ./build_collection.sh
       shell: bash
 
     - name: Relase new version
