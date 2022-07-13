@@ -13,6 +13,10 @@ jobs:
     # Important: This sets up your GITHUB_WORKSPACE environment variable
     - uses: actions/checkout@v2
 
+    - name: echo
+      run:   echo $release_tag
+      shell: bash
+
     - name: building collection
       run:  ./build_collection.sh
       shell: bash
